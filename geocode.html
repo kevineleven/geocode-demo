@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="geocode.css"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9pxfXSPLUNC4iiE4WIFSbrt5mTKQLs_c&sensor=true"></script>
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="geocode.js"></script>
+<div ng-app ng-controller="MapCtrl" id="containerDiv">
+  <div id="addressDiv">
+    <div id="formDiv">
+      <span id="enterZipText">Enter ZIP and # of stores (max {{maxStoresNum}}):</span>
+      <form ng-submit="zipGeocodeRequest()">
+        <input autofocus id="userZipField" class="userInput" type="number" ng-model="userZip" required ng-pattern="/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/" placeholder="Zip" maxlength="5" />
+        <input id="storesNumField" class="userInput" type="number" ng-model="storesToLocate" required maxlength="2" placeholder="#" />
+        <input class="userZipBtn" type="submit" value="Find Stores" ng-disabled="checkDisabled()" />
+      </form>
+    </div>
+    <div id="storeInfoContainer">
+      <div id="storeInfo"  ng-repeat="storeData in nearestStores" >
+        <div class="storeInfoCell" ng-class="{firstCell:$first}">
+          <div class="markerImg"><span>{{$index + 1}}</span></div>
+          <span class="boldAddr">{{storeData.addr1}}</span>
+          <span>{{storeData.addr2}}</span>
+          <span>{{storeData.addr3}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="map-canvas"/>
+</div>
